@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PEMILIHAN KETUA & WAKIL KETUA OSIS TAHUN 2026/2027</title>
+    <style>
+    body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin-bottom: 40px;
+    gap: 20px;
+}
+.logo-sekolah {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+.logo-osis {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+h1 {
+    font-size: 2.5em;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    flex: 1;
+    text-align: center;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+.candidate-card {
+    background: rgb(253, 252, 255);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+.candidate-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+}
+.candidate-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 0;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 4px solid #000000;
+}
+.candidate-name {
+    font-size: 1.2em;
+    margin: 10px 0;
+    color: #000000;
+}
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    animation: fadeIn 0.3s ease;
+}
+.modal-content {
+    background: rgb(255, 255, 255);
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 15px;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+    position: relative;
+    animation: slideIn 0.3s ease;
+}
+.close {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #aaa;
+}
+.close:hover {
+    color: #000;
+}
+.vision-misi {
+    text-align: left;
+    margin: 20px 0;
+}
+.vision-misi h3 {
+    color: #000000;
+    border-bottom: 2px solid #000000;
+    color:#000000;
+    padding-bottom: 5px;
+}
+.vote-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1.1em;
+    border-radius: 25px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background 0.3s ease;
+}
+.vote-btn:hover:not(:disabled) {
+    background: #218838;
+}
+.vote-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+.thanks-message {
+    display: none;
+    background: #d4edda;
+    color: #155724;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    animation: fadeIn 0.5s ease;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes slideIn {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+.thanks-screen {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #667eea;
+    color: white;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 2000;
+    animation: fadeIn 0.5s ease;
+}
+.thanks-screen h1 {
+    font-size: 3em;
+    margin-bottom: 0;
+}
+.countdown {
+    font-size: 2em;
+    margin-top: 0;
+}
+.animation-screen {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    z-index: 3000;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    color: white;
+}
+.animation-screen img {
+    width: 150px;
+    animation: fadeIn 2s ease-in-out infinite alternate;
+}
+</style>
+</head>
+<body>
+    <header>
+        <img src="GAMBAR/LOGO SMK.jpg" alt="Logo Sekolah" class="logo-sekolah">
+        <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
+            <h1 style="margin: 0;">PEMILIHAN KETUA & WAKIL KETUA OSIS 2026/2027</h1>
+            <p style="margin: 0;">Pilih calon ketua OSIS terbaik untuk masa depan sekolah kita!</p>
+        </div>
+        <img src="GAMBAR/Desain tanpa judul.png" alt="Logo OSIS" class="logo-osis">
+    </header>
+    <form id=""voteForm">
+    <div class="container">
+        <div class="candidate-card" onclick="openModal(1)">
+            <div style="font-size: 1.5em; font-weight: bold; color: #000000; margin-bottom: 10px;">1</div>
+            <img src="GAMBAR/ANIES.png" alt="Calon 1" class="candidate-photo" onerror="this.src='https://via.placeholder.com/150?text=Calon+1'">
+            <h4 class="candidate-name">Ketua: Anies Baswedan<br>Wakil: Muahmin Iskandar</h2>
+            <p>Klik untuk melihat visi dan misi</p>
+        </div>
+
+        <div class="candidate-card" onclick="openModal(2)">
+            <div style="font-size: 1.5em; font-weight: bold; color: #000000; margin-bottom: 10px;"> 2</div>
+            <img src="GAMBAR/PRABOWO.png" alt="Calon 2" class="candidate-photo" onerror="this.src='https://via.placeholder.com/150?text=Calon+2'">
+            <h2 class="candidate-name">Ketua: Prabowo Subianto<br>Wakil: Gibran Rakabuming Raka</h2>
+            <p>Klik untuk melihat visi dan misi</p>
+        </div>
+
+        <div class="candidate-card" onclick="openModal(3)">
+            <div style="font-size: 1.5em; font-weight: bold; color: #000000; margin-bottom: 10px;">3</div>
+            <img src="GAMBAR/GANJAR.png" alt="Calon 3" class="candidate-photo" onerror="this.src='https://via.placeholder.com/150?text=Calon+3'">
+            <h2 class="candidate-name">Ketua: Ganjar<br>Wakil: Teuapal</h2>
+            <p>Klik untuk melihat visi dan misi</p>
+        </div>
+
+        <div class="candidate-card" onclick="openModal(4)">
+            <div style="font-size: 1.5em; font-weight: bold; color: #000000; margin-bottom: 10px;"> 4</div>
+            <img src="GAMBAR/MAS NAZRIEL.png" alt="Calon 4" class="candidate-photo" onerror="this.src='https://via.placeholder.com/150?text=Calon+4'">
+            <h2 class="candidate-name">Ketua: Mas Nazriel Ganteng<br>Wakil: Istrinya Anime</h2>
+            <p>Klik untuk melihat visi dan misi</p>
+        </div>
+    </div>
+
+    <div id="animation-screen" class="animation-screen" style="display:none; position: fixed; top:0; left:0; width:100%; height:100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); z-index: 3000; justify-content: center; align-items: center; flex-direction: row; color: white;">
+        <img src="GAMBAR/Desain tanpa judul.png" alt="Logo OSIS" style="width: 150px; animation: fadeIn 2s ease-in-out infinite alternate;">
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img id="modal-photo" src="" alt="Calon" class="candidate-photo" style="display: block; margin: 0 auto 20px;">
+            <h2 id="modal-name"></h2>
+            <div class="vision-misi">
+                <h3>Visi</h3>
+                <p id="modal-visi"></p>
+                <h3>Misi</h3>
+                <p id="modal-misi"></p>
+            </div>
+            <button id="vote-btn" class="vote-btn" onclick="vote()">Vote</button>
+            <div id="thanks" class="thanks-message">
+                Terima kasih atas partisipasi Anda! Suara Anda telah dicatat.
+            </div>
+        </div>
+    </div>
+
+        <div id="thanks-screen" class="thanks-screen">
+            <img src="GAMBAR/Desain tanpa judul.png" alt="Logo OSIS" style="width: 200px; height: auto; margin: 20px 0;">
+            <div id="successMessage" style="font-size: 18px; color: white; text-shadow: 1px 1px 2px #000;"></div>
+        </div>
+
+    <script>// Sample data for candidates
+const candidates = {
+    1: {
+        ketua: "Anies Baswedan",
+        wakil: "Muahmin Iskandar",
+        photo: "GAMBAR/ANIES.png",
+        visi: "Membangun OSIS yang inklusif dan inovatif untuk semua siswa.",
+        misi: "1. Meningkatkan fasilitas belajar.<br>2. Mengadakan kegiatan ekstrakurikuler lebih banyak.<br>3. Memperkuat komunikasi antar siswa dan guru."
+    },
+    2: {
+        ketua: "Prabowo Subianto",
+        wakil: "Gibran Rakabuming Raka",
+        photo: "GAMBAR/PRABOWO.png",
+        visi: "OSIS yang berfokus pada pengembangan kepemimpinan siswa.",
+        misi: "1. Pelatihan kepemimpinan rutin.<br>2. Kolaborasi dengan komunitas luar.<br>3. Program pengabdian masyarakat."
+    },
+    3: {
+        ketua: "Ganjar",
+        wakil: "Teuapal",
+        photo: "GAMBAR/GANJAR.png",
+        visi: "Menciptakan lingkungan sekolah yang ramah dan berkelanjutan.",
+        misi: "1. Kampanye lingkungan hijau.<br>2. Dukungan kesehatan mental siswa.<br>3. Peningkatan teknologi di sekolah."
+    },
+    4: {
+        ketua: "Mas Nazriel Ganteng",
+        wakil: "Istrinya Anime",
+        photo: "GAMBAR/MAS NAZRIEL.png",
+        visi: "OSIS yang mendukung Nonton Anime Harem,Ecchi,Hentai(WAJIB).",
+        misi: "1. Membangun Semua Siswa Harus Nonton Anime.<br>2. Membangun Semua Siswa Harus Wibu.<br>3. Membangun Semua Siswa Harus Harem,Ecchi,Hentai."
+    }
+};
+
+let currentCandidate = null;
+let isVotingDisabled = false;
+let voteCounts = JSON.parse(localStorage.getItem('voteCounts')) || {1: 0, 2: 0, 3: 0, 4: 0};
+const successEl = document.getElementById('successMessage');
+
+function updateCounts() {
+    localStorage.setItem('voteCounts', JSON.stringify(voteCounts));
+}
+
+function openModal(id) {
+    currentCandidate = id;
+    const cand = candidates[id];
+    document.getElementById('modal-name').innerHTML = "Ketua: " + cand.ketua + "<br>Wakil: " + cand.wakil;
+    document.getElementById('modal-photo').src = cand.photo;
+    document.getElementById('modal-visi').textContent = cand.visi;
+    document.getElementById('modal-misi').innerHTML = cand.misi;
+    document.getElementById('thanks').style.display = 'none';
+    document.getElementById('vote-btn').disabled = isVotingDisabled;
+    document.getElementById('modal').style.display = 'block';
+}
+
+function closeModal() {
+    document.getElementById('modal').style.display = 'none';
+}
+
+function vote() {
+    if (isVotingDisabled) return;
+
+    isVotingDisabled = true;
+    document.getElementById('vote-btn').disabled = true;
+    document.getElementById('thanks').style.display = 'block';
+
+    voteCounts[currentCandidate]++;
+    updateCounts();
+
+    // Hide modal and main content, show thanks screen with countdown
+    closeModal();
+    document.querySelector('.container').style.display = 'none';
+    const thanksScreen = document.getElementById('thanks-screen');
+    thanksScreen.style.display = 'flex';
+
+    let countdown = 5;
+    const message = "<h1>Selamat anda telah memilih!</h1><br>Semoga paslon yang kamu pilih bisa menjadi sekolah makin maju.<br>Tunggu ";
+    successEl.innerHTML = `${message}${countdown} detik untuk vote selanjutnya.`;
+
+    const interval = setInterval(() => {
+        countdown--;
+        successEl.innerHTML = `${message}${countdown} detik untuk vote selanjutnya.`;
+        if (countdown <= 0) {
+            clearInterval(interval);
+            thanksScreen.style.display = 'none';
+
+            // Show animation screen after countdown
+            const animationScreen = document.getElementById('animation-screen');
+            animationScreen.style.display = 'flex';
+
+            // After animation duration, hide animation and show main container
+            setTimeout(() => {
+                animationScreen.style.display = 'none';
+                document.querySelector('.container').style.display = 'grid';
+                isVotingDisabled = false;
+                document.getElementById('vote-btn').disabled = false;
+            }, 4000); // 4 seconds animation duration
+        }
+    }, 1000);
+}
+
+// Close modal on outside click
+window.onclick = function(event) {
+    const modal = document.getElementById('modal');
+    if (event.target == modal) {
+        closeModal();
+    }
+}
+
+// Initialize counts
+updateCounts();
+</script>
+</body>
+</html>
